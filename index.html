@@ -3,7 +3,7 @@
         <title>eiram</title>
     </head>
     <body>
-        <h1>eiram</h1>
+        <h1>eirama</h1>
 
         
     </body>
@@ -54,8 +54,10 @@ document.getElementById("secret-submit")
       document.close();
 
     } catch (error) {
-      message.textContent = "通信エラーが発生しました。";
-    }
+  message.textContent =
+    "通信エラー: " + error.message;
+  console.error(error);
+}
   });
 </script>
 
