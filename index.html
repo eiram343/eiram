@@ -1,8 +1,62 @@
 <html>
     <head>
-
+        <title>eiram</title>
     </head>
     <body>
+        <h1>eiram</h1>
+
         
     </body>
+
+
+<div id="secret-area">
+  <input
+    type="text"
+    id="secret-command"
+    placeholder="コマンドを入力"
+  >
+  <button id="secret-submit">実行</button>
+  <p id="secret-message"></p>
+</div>
+
+<script>
+const WORKER_URL =
+  "https://withered-sound-bb09.crimson-dawn-2721.workers.dev/";
+
+document.getElementById("secret-submit")
+  .addEventListener("click", async () => {
+    const command =
+      document.getElementById("secret-command").value;
+
+    const message =
+      document.getElementById("secret-message");
+
+    message.textContent = "確認中...";
+
+    try {
+      const response = await fetch(WORKER_URL, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({ command })
+      });
+
+      if (!response.ok) {
+        message.textContent = "コマンドが違います。";
+        return;
+      }
+
+      const html = await response.text();
+
+      document.open();
+      document.write(html);
+      document.close();
+
+    } catch (error) {
+      message.textContent = "通信エラーが発生しました。";
+    }
+  });
+</script>
+
 </html>
